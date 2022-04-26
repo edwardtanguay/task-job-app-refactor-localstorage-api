@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './App.scss';
 import _jobs from './data/jobs.json';
 import { JobsFull } from './components/JobsFull';
+import { JobsList } from './components/JobsList';
 
 _jobs.forEach((job) => {
 	job.status = 'accepted';
@@ -33,19 +34,9 @@ function App() {
 			<h1>Job Application Process</h1>
 			<button onClick={handleToggleView}>Toggle View</button>
 			{displayKind === 'full' ? (
-				<JobsFull jobs={jobs} handleStatusChange={handleStatusChange}/>
+				<JobsFull jobs={jobs} handleStatusChange={handleStatusChange} />
 			) : (
-				<ul className="jobList">
-					{jobs.map((job, index) => {
-						return (
-							<div key={index}>
-								<li key={index}>
-									<a href={job.url}>{job.position}</a>
-								</li>
-							</div>
-						);
-					})}
-				</ul>
+				<JobsList jobs={jobs} />
 			)}
 		</div>
 	);
