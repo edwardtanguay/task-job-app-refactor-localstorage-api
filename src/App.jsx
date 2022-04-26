@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.scss';
 import _jobs from './data/jobs.json';
 import { JobsFull } from './components/JobsFull';
@@ -13,6 +13,18 @@ const statuses = ['send', 'wait', 'interview', 'declined', 'accepted'];
 function App() {
 	const [displayKind, setDisplayKind] = useState('full');
 	const [jobs, setJobs] = useState(_jobs);
+
+	const saveToLocalStorage = () => {
+		const jobAppState = {
+			displayKind,
+			jobs,
+		};
+		localStorage.setItem('jobAppState', JSON.stringify(jobAppState));
+	};
+
+	useEffect(() => {
+		saveToLocalStorage();
+	}, [displayKind, jobs]);
 
 	const handleToggleView = () => {
 		const _displayKind = displayKind === 'full' ? 'list' : 'full';
