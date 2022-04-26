@@ -77,7 +77,7 @@ function App() {
 			<div>There are {techItems.length} tech items.</div>
 			<button onClick={handleToggleView}>Toggle View</button>
 			{displayKind === 'full' ? (
-				<JobsFull jobs={jobs} handleStatusChange={handleStatusChange} />
+				<JobsFull jobs={jobs} handleStatusChange={handleStatusChange} techItems={techItems} />
 			) : (
 				<JobsList jobs={jobs} />
 			)}
