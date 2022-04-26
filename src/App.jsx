@@ -11,16 +11,34 @@ _jobs.forEach((job) => {
 const statuses = ['send', 'wait', 'interview', 'declined', 'accepted'];
 
 function App() {
-	const [displayKind, setDisplayKind] = useState('full');
-	const [jobs, setJobs] = useState(_jobs);
+	const [displayKind, setDisplayKind] = useState('');
+	const [jobs, setJobs] = useState([]);
 
 	const saveToLocalStorage = () => {
-		const jobAppState = {
-			displayKind,
-			jobs,
-		};
-		localStorage.setItem('jobAppState', JSON.stringify(jobAppState));
+		if (displayKind !== '') {
+			const jobAppState = {
+				displayKind,
+				jobs,
+			};
+			localStorage.setItem('jobAppState', JSON.stringify(jobAppState));
+		}
 	};
+
+	const loadLocalStorage = () => {
+		const jobAppState = JSON.parse(localStorage.getItem('jobAppState'));
+		console.log(jobAppState);
+		if (jobAppState === null) {
+			setDisplayKind('list');
+			setJobs(_jobs);
+		} else {
+			setDisplayKind(jobAppState.displayKind);
+			setJobs(jobAppState.jobs);
+		}
+	};
+
+	useEffect(() => {
+		loadLocalStorage();
+	}, []);
 
 	useEffect(() => {
 		saveToLocalStorage();
